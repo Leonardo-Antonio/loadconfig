@@ -1,5 +1,5 @@
 package loadconfig
 
 type iLoadConfig interface {
-	Load()
+	Load() error
 }
