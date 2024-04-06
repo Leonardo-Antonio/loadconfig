@@ -10,25 +10,88 @@ go get github.com/Leonardo-Antonio/loadconfig
 ```
 
 ### Use 
-[Example](/examples/env.go)
+
+#### .env
 ```go
 package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/Leonardo-Antonio/loadconfig"
 )
 
 func main() {
-	loadconfig.New(loadconfig.TYPE_FILE_DOT_ENV, loadconfig.ENV_LOCAL).Load()
-	fmt.Println(os.Getenv("HELLO"))
+	// Example .env
+	err := loadconfig.New(loadconfig.TYPE_FILE_DOT_ENV, loadconfig.ENV_LOCAL).Load() // loadconfig.ENV_LOCAL = .env.local
+	if err != nil {
+		panic(err)
+	}
+	
+	fmt.Println(loadconfig.GetEnv("HELLO").String())                          // out: WORLD
 	/*
 	* output:
 	* ✅ Environments: .env.local
 	* WORLD
 	 */
 }
+```
 
+#### json
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/Leonardo-Antonio/loadconfig"
+)
+
+func main() {
+	err := loadconfig.New(loadconfig.TYPE_FILE_JSON, loadconfig.JSON_LOCAL).Load() // loadconfig.JSON_LOCAL = env.local.json
+	if err != nil {
+		panic(err)
+	}
+	
+	fmt.Println(loadconfig.GetEnv("HELLO").String())                        // out: WORLD
+	/*
+	* output:
+	* ✅ Environments: env.local.json
+	* WORLD
+	 */
+
+	loadconfig.New(loadconfig.TYPE_FILE_YML, loadconfig.YAML_LOCAL).Load() // loadconfig.JSON_LOCAL = env.local.yml
+	fmt.Println(loadconfig.GetEnv("HELLO").String())                       // out: WORLD
+	/*
+	* output:
+	* ✅ Environments: env.local.yml
+	* WORLD
+	 */
+}
+```
+
+
+#### yml
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/Leonardo-Antonio/loadconfig"
+)
+
+func main() {
+	err := loadconfig.New(loadconfig.TYPE_FILE_YAML, loadconfig.YAML_LOCAL).Load() // loadconfig.JSON_LOCAL = env.local.yml
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(loadconfig.GetEnv("HELLO").String())                       // out: WORLD
+	/*
+	* output:
+	* ✅ Environments: env.local.yml
+	* WORLD
+	 */
+}
 ```
